@@ -13,6 +13,7 @@ resource "aws_kms_key" "terraform_backend_key" {
 # creates s3 bucket resource that will be used as the remote backend with encryption enabled
 resource "aws_s3_bucket" "terraform_state_bucket" {
   bucket = var.bucket_name
+  acl    = "private"
 
   versioning {
     enabled = true
@@ -34,6 +35,15 @@ resource "aws_s3_bucket" "terraform_state_bucket" {
   tags = {
     Name = "terraform-remote-backend-bucket"
   }
+}
+
+resource "aws_s3_bucket_public_access_block" "terraform_state_bucket" {
+  bucket = aws_s3_bucket.terraform_state_bucket.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
 
 # creates the dynamodb table for locking
