@@ -1,3 +1,4 @@
+# starter code                                  ###################
 output "backend_bucket_arn" {
   value = aws_s3_bucket.terraform_state_bucket.arn
 }
@@ -12,4 +13,4 @@ output "backend_table_name" {
 
 output "kms_key_id" {
   value = aws_kms_key.terraform_backend_key.id
-}
+}                                               ##################

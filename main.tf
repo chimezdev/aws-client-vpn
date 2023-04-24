@@ -1,5 +1,5 @@
+# STARTER CODE                                                          ########################
 # creates kms key that will be used to encrypt the state files
-
 resource "aws_kms_key" "terraform_backend_key" {
   description             = "KMS key for encrypting Terraform remote state files"
   enable_key_rotation     = true
@@ -50,4 +50,4 @@ resource "aws_dynamodb_table" "terraform-state-table" {
   tags = {
     Name = "terraform-remote-backend-table"
   }
-}
+}                                                                         ########################
