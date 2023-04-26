@@ -25,3 +25,5 @@ We will use *Mutual authentiction(certificate-based)
 ## Use OpenVPN easy-rsa to generate the server and client certificates and keys, and upload the server certificate and key to ACM
 - follow the step in this link to generate the certificates and uplode to ACM. [Generate Certificates](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/client-authentication.html#mutual)
 - Copy the certificate arn that will be returned at the end of the steps. You will need it to create the client vpn.
+
+- After creating all resource, download the client vpn configuration file and add the client key and cert. before using it with an OpenVPN client [Config file](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/cvpn-working-endpoint-export.html)
