@@ -9,3 +9,11 @@ variable "dynamodb_table_name" {
   type    = string
   default = "terraform-state-table"
 }                                                           ########################
+
+variable "certificate_arn" {}
+
+variable "db_username" {}
+
+variable "db_password" {}
+
+variable "pri_cidrs" {}

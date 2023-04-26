@@ -16,3 +16,12 @@
 
 ## Commit your changes
 - Before you commit your code to a version control system such as git, ensure to add the ***.terraform and terraform*** files to a ***.gitinore*** file
+
+# Provision AWS Client VPN
+## Client Authentication 
+This is needed to determine if a client is permitted to connect to the client VPN endpoint. There 3 ways to authenticate. 
+See the link for more on client auth. [Client Authentication](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/client-authentication.html#mutual)
+We will use *Mutual authentiction(certificate-based)
+## Use OpenVPN easy-rsa to generate the server and client certificates and keys, and upload the server certificate and key to ACM
+- follow the step in this link to generate the certificates and uplode to ACM. [Generate Certificates](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/client-authentication.html#mutual)
+- Copy the certificate arn that will be returned at the end of the steps. You will need it to create the client vpn.
