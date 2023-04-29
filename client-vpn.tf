@@ -1,3 +1,4 @@
+# this calls the client-vpn module located at ./modules/client-vpn
 module "client_vpn" {
   source = "./modules/client-vpn"
   certificate_arn = var.certificate_arn
