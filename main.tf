@@ -1,3 +1,4 @@
+# This is the main entry file
 # STARTER CODE                                                          ########################
 # creates kms key that will be used to encrypt the state files
 resource "aws_kms_key" "terraform_backend_key" {
@@ -29,14 +30,14 @@ resource "aws_s3_bucket" "terraform_state_bucket" {
   }
 
   lifecycle {
-    prevent_destroy = false
+    prevent_destroy = true #to destroy everything when you run `terraform destroy` change the value to 'false'
   }
 
   tags = {
     Name = "terraform-remote-backend-bucket"
   }
 }
-
+# block public access to s3 bucket that stores the terraform state file
 resource "aws_s3_bucket_public_access_block" "terraform_state_bucket" {
   bucket = aws_s3_bucket.terraform_state_bucket.id
 

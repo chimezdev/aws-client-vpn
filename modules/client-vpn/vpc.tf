@@ -49,9 +49,9 @@ resource "aws_eip" "eip" {
   vpc        = true
   depends_on = [aws_internet_gateway.igw]
 }
-
+# creates the nat-gateway in the public subnet
 resource "aws_nat_gateway" "nat_gw" {
-  subnet_id     = element(aws_subnet.private_subnet.*.id, 1)
+  subnet_id     = element(aws_subnet.public_subnet.*.id, 1)
   allocation_id = aws_eip.eip.id
   depends_on = [aws_internet_gateway.igw]
 }
