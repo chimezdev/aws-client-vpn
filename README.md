@@ -10,19 +10,27 @@ To begin with, configure your AWS CLI to be able to authenticate with your AWS a
 
 - Use a local backend to create resources
     - from your terminal, cd into your project folder and run the command, `touch <file_name.extension>`
-    - create the **backend.tf**, **main.tf**, **variables.tf**, **output.tf** and **README.tf** files and copy the respective starter codes into them
+    - create the **backend.tf**, **main.tf**, **variables.tf**, **output.tf** and **README.md** files and copy the respective starter codes into them
     - run `terraform init` to initialize terraform to use a local backend.
     - run `terraform plan` and `terraform apply` to create the resources.
-    - after the resources have been provisioned, copy the respective outputs to the corresponding values in the **backend** block in the **backend.tf** file
+    - after the resources have been provisioned, copy the respective outputs exluding the bucket arn output to the corresponding values in the **backend** block in the **backend.tf** file
 
 - Migrate the terraform state to s3
-    - uncommet the *terraform* block of the **backend.tf** file
-    - run `terraform init` again and follow the prompt to migrate the terraform state to s3 that we have provisioned.
+    - uncomment the *terraform* block of the **backend.tf** file
+    - run `terraform init` again followed by `terraform plan and apply` to migrate the terraform state to s3 that we have provisioned.
 
 ## Commit your changes
 - Before you commit your code to a version control system such as git, ensure to add the ***.terraform and terraform*** files to a ***.gitinore*** file
 
 # Provision AWS Client VPN
+Now we need to create a separate module for the AWS Client VPN.
+- Run the command `touch modules/client-vpn/vpc.tf` to create the first file, 'vpc.tf' in the new module directory.
+- enter `cd modules/client-vpn` to change directory into the new module.
+- copy and paste the terraform codes in the *vpc.tf* into your newly created ***vpc.tf*** file. The code creates the vpc and other networking resources required by the Client VPN.
+- following the same procedure, create other files and copy the terraform codes into the corresponding files
+- the ***rds-db.tf*** file creates an RDS-Postgres database in which we will connect to using the AWS Client VPN we are creating.
+- After the above steps, go back to the root folder and create the ***client-vpn.tf*** file and populate it with the code. This is where the *modules/client-vpn* module is called.
+
 ## Client Authentication 
 This is needed to determine if a client is permitted to connect to the client VPN endpoint. There 3 ways to authenticate. 
 See the link for more on client auth. [Client Authentication](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/client-authentication.html#mutual)
@@ -30,6 +38,14 @@ We will use *Mutual authentiction(certificate-based)
 ## Use OpenVPN easy-rsa to generate the server and client certificates and keys, and upload the server certificate and key to ACM
 - follow the step in this link to generate the certificates and uplode to ACM. [Generate Certificates](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/client-authentication.html#mutual)
 - Copy the certificate arn that will be returned at the end of the steps. You will need it to create the client vpn.
+- go to config/var.tfvars and replace the **certificate_arn** with the certificate arn that you just copied
+- also provide the values for the db_username and db_password and the subnet_cidr in the var.tfvars
+- add the **config/var.tfvars** to the *.gitignore* file.
+
+## Provision all the resources
+- Run `terraform plan` and go through the output to see resources that terraform will provision.
+- run `terraform apply` and follow the prompt
+Terraform will now provision all the resources we have defined and will return any output defined in the **output.tf** file
 
 
 - After creating all resource, download the client vpn configuration file and add the client key and cert. before using it with an OpenVPN client [Config file](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/cvpn-working-endpoint-export.html)
