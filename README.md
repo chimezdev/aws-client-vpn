@@ -1,10 +1,15 @@
 # AWS Client VPN Provisioning with Terraform
-
-## Configure your cli
-- run `aws configure --profile default` and provide your aws credentials such as ***access_key*** and ***secret_access_key***
+"AWS Client VPN is a managed client-based VPN service that enables you to securely access your AWS resources and resources in your on-premises network. With Client VPN, you can securely access your resources from any location using an OpenVPN-based VPN client including your databases in private subnet. 
+This project is to privide guild on how to provision AWS Client VPN using IaC - Terraform
+## Configure your AWS cli
+To begin with, configure your AWS CLI to be able to authenticate with your AWS account.
+- run `aws configure --profile <your_profile_name>` and provide your aws credentials such as ***access_key***, ***secret_access_key***, ***default region*** and output format
 
 ## Provision backend resources
+"Terraform stores state about managed infrastructure to map real-world resources to the configuration, keep track of metadata, and improve performance. Terraform stores this state in a local file by default, but you can also use a Terraform remote backend to store state remotely. We will use AWS S3 as our remote backend and DynamoDB for state lock but first will use local state to create the S3, KMS key and DynamoDB resources after which we migrate the state file to S3.
+
 - Use a local backend to create resources
+    - from your terminal, cd into your project folder and run the command, `touch <file_name.extension>`
     - create the **backend.tf**, **main.tf**, **variables.tf**, **output.tf** and **README.tf** files and copy the respective starter codes into them
     - run `terraform init` to initialize terraform to use a local backend.
     - run `terraform plan` and `terraform apply` to create the resources.
